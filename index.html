@@ -59,7 +59,7 @@ nav.scrolled{background:rgba(8,7,5,.96);backdrop-filter:blur(20px)}
 /* === HERO === */
 .hero{height:100vh;position:relative;display:flex;align-items:flex-end}
 .hero-bg{position:absolute;inset:0;overflow:hidden}
-.hero-bg img{display:block;width:100%;height:100%;object-fit:cover}
+.hero-bg img,.hero-bg video{display:block;width:100%;height:100%;object-fit:cover}
 .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 0%,transparent 35%,transparent 75%,rgba(8,7,5,.2) 100%);z-index:1}
 .hero-content{position:relative;z-index:2;padding:0 48px 80px;width:100%}
 .hero-ey{font-family:var(--display);font-size:.8rem;letter-spacing:.5em;color:var(--gold);font-style:italic;margin-bottom:28px;opacity:0;transform:translateY(20px);animation:su 1s .8s forwards}
@@ -139,6 +139,24 @@ nav.scrolled{background:rgba(8,7,5,.96);backdrop-filter:blur(20px)}
 .divider-track span{font-family:var(--display);font-size:.6rem;letter-spacing:.4em;color:rgba(184,150,62,.2);font-style:italic;flex-shrink:0;display:flex;align-items:center;gap:24px}
 .divider-track span::before{content:'◆';font-size:.4rem;color:rgba(184,150,62,.12)}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* === VIDEO SHOWCASE === */
+.vid-section{padding:clamp(80px,10vw,160px) 48px;position:relative}
+.vid-section .stag{font-family:var(--display);font-size:.7rem;letter-spacing:.5em;color:var(--gold);font-style:italic;margin-bottom:32px}
+.vid-section h2{font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1;letter-spacing:-.02em;margin-bottom:16px}
+.vid-section h2 .a{color:var(--gold)}
+.vid-section .vid-sub{font-family:var(--display);font-size:.85rem;letter-spacing:.2em;color:var(--dim);font-style:italic;margin-bottom:clamp(40px,5vw,72px)}
+.vid-wrap{position:relative;width:100%;max-width:1200px;margin:0 auto;aspect-ratio:16/9;border-radius:4px;overflow:hidden;cursor:pointer;background:#0a0908}
+.vid-wrap video{width:100%;height:100%;object-fit:cover;display:block;transition:filter .4s}
+.vid-wrap.playing video{filter:none}
+.vid-wrap:not(.playing) video{filter:brightness(.6)}
+.vid-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;transition:opacity .4s}
+.vid-wrap.playing .vid-overlay{opacity:0;pointer-events:none}
+.vid-play-btn{width:80px;height:80px;border-radius:50%;border:2px solid rgba(184,150,62,.5);background:rgba(8,7,5,.6);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;transition:all .3s}
+.vid-play-btn:hover{border-color:var(--gold);background:rgba(184,150,62,.15);transform:scale(1.08)}
+.vid-play-btn svg{width:24px;height:24px;fill:var(--gold);margin-left:3px}
+.vid-caption{text-align:center;margin-top:24px;font-family:var(--display);font-size:.7rem;letter-spacing:.3em;color:rgba(184,150,62,.4);font-style:italic}
+@media(max-width:1024px){.vid-section{padding:80px 24px}}
 
 /* === HANGZHOU === */
 .hz-hero{height:75vh;position:relative;overflow:hidden}
@@ -246,7 +264,9 @@ html[lang="en"] .zh-only{display:none}
 <!-- ======== HERO ======== -->
 <section class="hero">
 <div class="hero-bg">
-<img alt="介观当代艺术博物馆外观" src="images/img_0.webp" style="width:100%;height:100%;object-fit:cover;filter:brightness(.55)"/>
+<video autoplay muted loop playsinline poster="images/img_0.webp" style="width:100%;height:100%;object-fit:cover;filter:brightness(.55)">
+<source src="video/hero-bg.mp4" type="video/mp4"/>
+</video>
 </div>
 <div class="hero-content">
 <div class="hero-ey">MoCA Weland — Lhasa, Xizang</div>
@@ -315,6 +335,21 @@ html[lang="en"] .zh-only{display:none}
 <span>LHASA · LIANGZHU</span><span><span class="zh-only">文化链接</span><span class="en-only">Cultural Link</span></span><span>MESOSCOPIC HANGZHOU</span><span>介观<span class="zh-only">当代艺术博物馆</span><span class="en-only">Museum of Contemporary Art</span></span><span>A PLACE OF LINK</span><span>MoCA WELAND</span><span><span class="zh-only">藏地文明 × 良渚文明</span><span class="en-only">Tibetan Civilization × Liangzhu Civilization</span></span><span><span class="zh-only">链接之地</span><span class="en-only">Land of Connection</span></span>
 </div>
 </div>
+<!-- ======== VIDEO SHOWCASE ======== -->
+<section class="vid-section rv">
+<div class="stag">Film · <span class="zh-only">影像</span><span class="en-only">Film</span></div>
+<h2><span class="zh-only">介观<span class="a">·</span>印象</span><span class="en-only">Weland<span class="a"> · </span>Impression</span></h2>
+<div class="vid-sub"><span class="zh-only">文博会 — 介观当代艺术博物馆</span><span class="en-only">Cultural Expo — MoCA Weland</span></div>
+<div class="vid-wrap" id="vidWrap" onclick="toggleShowcaseVideo()">
+<video id="showcaseVid" preload="metadata" playsinline poster="images/img_0.webp">
+<source src="video/showcase.mp4" type="video/mp4"/>
+</video>
+<div class="vid-overlay">
+<div class="vid-play-btn"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
+</div>
+</div>
+<div class="vid-caption"><span class="zh-only">点击播放 · 介观当代艺术博物馆纪录短片</span><span class="en-only">Click to Play · MoCA Weland Documentary Short</span></div>
+</section>
 <!-- ======== HANGZHOU ======== -->
 <section id="hz">
 <div class="hz-hero">
@@ -400,6 +435,17 @@ window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>80)
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})});
+
+/* ===== VIDEO SHOWCASE CONTROL ===== */
+function toggleShowcaseVideo(){
+  const wrap=document.getElementById('vidWrap');
+  const vid=document.getElementById('showcaseVid');
+  if(vid.paused){vid.play();wrap.classList.add('playing')}
+  else{vid.pause();wrap.classList.remove('playing')}
+}
+document.getElementById('showcaseVid').addEventListener('ended',function(){
+  document.getElementById('vidWrap').classList.remove('playing');
+});
 
 /* ===== LANG TOGGLE ===== */
 window.switchLang=function(lang,el){
